@@ -38,14 +38,13 @@
 
     <style>
         body {
-            /* Changed from black to icy blue to prevent black screen if images are blocked */
             background-color: #b9e3f9; 
             color: #FFFFFF;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
 
-        /* 100% Guaranteed Antarctica Background */
+        /* 100% Guaranteed Plain Icy Blue & White Background */
         .bg-ice-container {
             position: fixed;
             top: 0;
@@ -54,67 +53,47 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            /* BULLETPROOF FALLBACK: Draws white mountains and a blue river using CSS if the image is blocked */
-            background: linear-gradient(to bottom, #ffffff 0%, #ffffff 35%, #89cff0 55%, #1e5a96 100%);
-        }
-        
-        .bg-ice-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* Verified URL: Pure glacier ice and blue water, zero trees */
-            background-image: url('https://images.unsplash.com/photo-1548682496-c14878a8be78?auto=format&fit=crop&w=2560&q=80');
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .bg-ice-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* Lightened overlay so the white mountains and blue water are very visible */
-            background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.3) 100%);
+            background: linear-gradient(to bottom, #ffffff 0%, #e0f2fe 35%, #7dd3fc 70%, #0284c7 100%);
         }
 
-        /* Frosted Glass Link Buttons */
+        /* Frosted White Glass Link Buttons */
         .link-card {
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(10, 10, 10, 0.3);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            
+            /* White glass base */
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
-        
-        .link-card:hover {
-            border-color: #FF5500;
-            background: rgba(255, 85, 0, 0.9);
+
+        .link-card .link-text,
+        .link-card .link-icon {
+            color: #030303;
+            transition: all 0.3s ease;
+        }
+
+        /* Hover / Select state for White Glass */
+        .link-card:hover, .link-card:focus {
+            background: rgba(255, 255, 255, 0.65);
+            border-color: #ffffff;
             transform: translateY(-4px);
-            box-shadow: 0 10px 25px -5px rgba(255, 85, 0, 0.5);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
-        .link-card:hover .link-text, 
-        .link-card:hover .link-icon {
-            color: #000000 !important;
-        }
-
-        /* Profile Image */
         .profile-img-border {
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
         }
         .group:hover .profile-img-border {
-            border-color: #FF5500;
+            border-color: #000000;
         }
 
-        /* Single Page App Transitions */
         .view-section {
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
@@ -135,19 +114,20 @@
             position: relative;
         }
 
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #FF5500; }
+        /* Hide scrollbars completely */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
 
-<body class="min-h-screen flex flex-col items-center selection:bg-brand-orange selection:text-white relative w-full">
+<body class="min-h-screen flex flex-col items-center selection:bg-black selection:text-white relative w-full">
     
-    <div class="bg-ice-container">
-        <div class="bg-ice-image"></div>
-        <div class="bg-ice-overlay"></div>
-    </div>
+    <div class="bg-ice-container"></div>
 
     <!-- WRAPPER -->
     <div class="relative w-full z-10 h-[100dvh]">
@@ -156,7 +136,7 @@
         <!-- VIEW 1: LINKS DIRECTORY (ABSOLUTELY CENTERED) -->
         <!-- ============================================== -->
         <main id="view-links" class="view-section view-active fixed inset-0 w-full h-[100dvh] flex items-center justify-center">
-            <div class="w-full max-w-[400px] flex flex-col items-center justify-center p-6 max-h-[100dvh] overflow-y-auto pb-10">
+            <div class="w-full max-w-[400px] flex flex-col items-center justify-center p-6 max-h-[100dvh] overflow-y-auto pb-10 no-scrollbar">
                 
                 <header class="flex flex-col items-center mb-8 w-full mt-4">
                     <!-- Profile Picture -->
@@ -166,66 +146,66 @@
                             alt="Pengverse Profile" 
                             class="w-28 h-28 object-cover rounded-full profile-img-border bg-brand-surface filter grayscale group-hover:grayscale-0 transition-all duration-500"
                         >
-                        <div class="absolute bottom-1 right-1 bg-brand-orange w-4 h-4 rounded-full animate-pulse border-2 border-black"></div>
+                        <div class="absolute bottom-1 right-1 bg-black w-4 h-4 rounded-full animate-pulse border-2 border-white"></div>
                     </div>
 
-                    <h1 class="text-5xl font-hero tracking-widest text-center mb-1 text-white drop-shadow-lg">
-                        PENGVERSE<span class="text-brand-orange">.</span>
+                    <h1 class="text-5xl font-hero tracking-widest text-center mb-1 text-black drop-shadow-lg">
+                        PENGVERSE<span class="text-black">.</span>
                     </h1>
-                    <p class="text-white/80 font-medium tracking-widest uppercase text-xs text-center drop-shadow-md">
+                    <p class="text-black/70 font-bold tracking-widest uppercase text-xs text-center">
                         Official Store & Links
                     </p>
                 </header>
 
-                <div class="w-full flex flex-col gap-4 mb-8">
+                <div class="w-full flex flex-col gap-4 mb-8 link-wrapper">
                     
                     <button onclick="openShop('Peng Tshirts')" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none">
                         <div class="flex items-center gap-4">
-                            <i class="fas fa-shirt text-brand-orange link-icon text-xl w-6 text-center"></i>
-                            <span class="font-bold text-sm tracking-widest uppercase text-white link-text">Peng Tshirts</span>
+                            <i class="fas fa-shirt link-icon text-xl w-6 text-center"></i>
+                            <span class="font-bold text-sm tracking-widest uppercase link-text">Peng Tshirts</span>
                         </div>
-                        <i class="fas fa-arrow-right text-white/50 link-icon"></i>
+                        <i class="fas fa-arrow-right link-icon opacity-60"></i>
                     </button>
 
                     <button onclick="openShop('Peng Hoodies')" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none">
                         <div class="flex items-center gap-4">
-                            <i class="fas fa-layer-group text-brand-orange link-icon text-xl w-6 text-center"></i>
-                            <span class="font-bold text-sm tracking-widest uppercase text-white link-text">Peng Hoodies</span>
+                            <i class="fas fa-layer-group link-icon text-xl w-6 text-center"></i>
+                            <span class="font-bold text-sm tracking-widest uppercase link-text">Peng Hoodies</span>
                         </div>
-                        <i class="fas fa-arrow-right text-white/50 link-icon"></i>
+                        <i class="fas fa-arrow-right link-icon opacity-60"></i>
                     </button>
 
                     <button onclick="openShop('Peng Keychains')" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none">
                         <div class="flex items-center gap-4">
-                            <i class="fas fa-key text-brand-orange link-icon text-xl w-6 text-center"></i>
-                            <span class="font-bold text-sm tracking-widest uppercase text-white link-text">Peng Keychains</span>
+                            <i class="fas fa-key link-icon text-xl w-6 text-center"></i>
+                            <span class="font-bold text-sm tracking-widest uppercase link-text">Peng Keychains</span>
                         </div>
-                        <i class="fas fa-arrow-right text-white/50 link-icon"></i>
+                        <i class="fas fa-arrow-right link-icon opacity-60"></i>
                     </button>
 
                     <button onclick="openShop('Peng Mugs')" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none">
                         <div class="flex items-center gap-4">
-                            <i class="fas fa-mug-hot text-brand-orange link-icon text-xl w-6 text-center"></i>
-                            <span class="font-bold text-sm tracking-widest uppercase text-white link-text">Peng Mugs</span>
+                            <i class="fas fa-mug-hot link-icon text-xl w-6 text-center"></i>
+                            <span class="font-bold text-sm tracking-widest uppercase link-text">Peng Mugs</span>
                         </div>
-                        <i class="fas fa-arrow-right text-white/50 link-icon"></i>
+                        <i class="fas fa-arrow-right link-icon opacity-60"></i>
                     </button>
 
                     <button onclick="openShop('Peng Plushies')" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none">
                         <div class="flex items-center gap-4">
-                            <i class="fas fa-ghost text-brand-orange link-icon text-xl w-6 text-center"></i>
-                            <span class="font-bold text-sm tracking-widest uppercase text-white link-text">Peng Plushies</span>
+                            <i class="fas fa-ghost link-icon text-xl w-6 text-center"></i>
+                            <span class="font-bold text-sm tracking-widest uppercase link-text">Peng Plushies</span>
                         </div>
-                        <i class="fas fa-arrow-right text-white/50 link-icon"></i>
+                        <i class="fas fa-arrow-right link-icon opacity-60"></i>
                     </button>
 
                     <!-- Instagram Link -->
                     <a href="https://www.instagram.com/peng_verse?igsh=ajd5OXh4eDJ2MzF2" target="_blank" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none mt-2">
                         <div class="flex items-center gap-4">
-                            <i class="fab fa-instagram text-brand-orange link-icon text-xl w-6 text-center"></i>
-                            <span class="font-bold text-sm tracking-widest uppercase text-white link-text">Instagram</span>
+                            <i class="fab fa-instagram link-icon text-xl w-6 text-center"></i>
+                            <span class="font-bold text-sm tracking-widest uppercase link-text">Instagram</span>
                         </div>
-                        <i class="fas fa-external-link-alt text-white/50 link-icon text-sm"></i>
+                        <i class="fas fa-external-link-alt link-icon text-sm opacity-60"></i>
                     </a>
                 </div>
 
@@ -238,12 +218,12 @@
         <main id="view-shop" class="view-section view-hidden w-full max-w-[1200px] mx-auto flex flex-col relative z-20 p-5 sm:p-8 min-h-full">
             
             <!-- Shop Navigation -->
-            <nav class="flex items-center justify-between border-b border-white/20 pb-6 mb-10 sticky top-0 bg-[#030303]/80 backdrop-blur-xl z-40 pt-4 rounded-b-xl px-4 -mx-4 sm:mx-0 sm:px-0 sm:rounded-none">
-                <button onclick="closeShop()" class="flex items-center gap-2 text-white hover:text-brand-orange transition group bg-white/10 px-4 py-2 rounded-full backdrop-blur-md">
+            <nav class="flex items-center justify-between border-b border-black/10 pb-6 mb-10 sticky top-0 bg-white/80 backdrop-blur-xl z-40 pt-4 rounded-b-xl px-4 -mx-4 sm:mx-0 sm:px-0 sm:rounded-none shadow-sm">
+                <button onclick="closeShop()" class="flex items-center gap-2 text-black hover:text-white hover:bg-black transition-all group bg-black/5 border border-black/10 px-4 py-2 rounded-full backdrop-blur-md">
                     <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
                     <span class="font-bold tracking-widest uppercase text-sm">Back</span>
                 </button>
-                <h2 id="shop-title" class="font-hero text-3xl md:text-5xl tracking-wide text-white absolute left-1/2 -translate-x-1/2 drop-shadow-md">
+                <h2 id="shop-title" class="font-hero text-3xl md:text-5xl tracking-wide text-black absolute left-1/2 -translate-x-1/2 drop-shadow-sm">
                     CATEGORY
                 </h2>
                 <div class="w-10"></div> <!-- spacer -->
@@ -293,19 +273,19 @@
             viewLinks.classList.add('view-hidden');
 
             setTimeout(() => {
-                // Update title
-                shopTitle.innerHTML = categoryName.toUpperCase().replace('PENG ', 'PENG<span class="text-brand-orange">.</span> ');
+                // Update title styling to match new monochrome aesthetic
+                shopTitle.innerHTML = categoryName.toUpperCase().replace('PENG ', 'PENG<span class="text-black">.</span> ');
                 
-                // Inject products
+                // Inject products with new monochrome styling
                 const categoryProducts = productsDB.filter(p => p.category === categoryName);
                 shopGrid.innerHTML = categoryProducts.map(p => `
-                    <div class="product-card group flex flex-col bg-black/50 backdrop-blur-md rounded-xl p-3 border border-white/10">
+                    <div class="product-card group flex flex-col bg-white/60 backdrop-blur-md rounded-xl p-3 border border-black/10 shadow-sm hover:shadow-xl transition-all duration-300">
                         <div class="relative aspect-[4/5] overflow-hidden rounded-lg mb-4">
                             <img src="${p.img}" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition duration-500 group-hover:scale-110">
                         </div>
                         <div class="flex justify-between items-start px-2">
-                            <h3 class="font-bold text-white text-lg leading-tight w-2/3">${p.name}</h3>
-                            <span class="font-medium text-brand-orange">$${p.price.toFixed(2)}</span>
+                            <h3 class="font-bold text-black text-lg leading-tight w-2/3">${p.name}</h3>
+                            <span class="font-medium text-black bg-black/10 px-2 py-1 rounded-md">$${p.price.toFixed(2)}</span>
                         </div>
                     </div>
                 `).join('');
