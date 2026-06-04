@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PENGVERSE | Official Links & Shop</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        hero: ['"Bebas Neue"', 'sans-serif'],
+                        sans: ['"Space Grotesk"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            orange: '#FF5500', 
+                            black: '#030303',
+                            surface: '#0F0F0F',
+                            border: '#222222',
+                            text: '#FFFFFF'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            /* Changed from black to icy blue to prevent black screen if images are blocked */
+            background-color: #b9e3f9; 
+            color: #FFFFFF;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* 100% Guaranteed Antarctica Background */
+        .bg-ice-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            /* BULLETPROOF FALLBACK: Draws white mountains and a blue river using CSS if the image is blocked */
+            background: linear-gradient(to bottom, #ffffff 0%, #ffffff 35%, #89cff0 55%, #1e5a96 100%);
+        }
+        
+        .bg-ice-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Verified URL: Pure glacier ice and blue water, zero trees */
+            background-image: url('https://images.unsplash.com/photo-1548682496-c14878a8be78?auto=format&fit=crop&w=2560&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .bg-ice-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Lightened overlay so the white mountains and blue water are very visible */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.3) 100%);
+        }
+
+        /* Frosted Glass Link Buttons */
+        .link-card {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(10, 10, 10, 0.3);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .link-card:hover {
+            border-color: #FF5500;
+            background: rgba(255, 85, 0, 0.9);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(255, 85, 0, 0.5);
+        }
+
+        .link-card:hover .link-text, 
+        .link-card:hover .link-icon {
+            color: #000000 !important;
+        }
+
+        /* Profile Image */
+        .profile-img-border {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+        .group:hover .profile-img-border {
+            border-color: #FF5500;
+        }
+
+        /* Single Page App Transitions */
+        .view-section {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .view-hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.98);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .view-active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+            position: relative;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #FF5500; }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center selection:bg-brand-orange selection:text-white relative w-full">
+    
+    <div class="bg-ice-container">
+        <div class="bg-ice-image"></div>
+        <div class="bg-ice-overlay"></div>
+    </div>
+
+    <!-- WRAPPER -->
+    <div class="relative w-full z-10 h-[100dvh]">
+        
+        <!-- ============================================== -->
+        <!-- VIEW 1: LINKS DIRECTORY (ABSOLUTELY CENTERED) -->
+        <!-- ============================================== -->
+        <main id="view-links" class="view-section view-active fixed inset-0 w-full h-[100dvh] flex items-center justify-center">
+            <div class="w-full max-w-[400px] flex flex-col items-center justify-center p-6 max-h-[100dvh] overflow-y-auto pb-10">
+                
+                <header class="flex flex-col items-center mb-8 w-full mt-4">
+                    <!-- Profile Picture -->
+                    <div class="mb-5 group cursor-pointer relative">
+                        <img 
+                            src="https://images.unsplash.com/photo-1551085254-e96b210db58a?auto=format&fit=crop&q=80&w=400" 
+                            alt="Pengverse Profile" 
+                            class="w-28 h-28 object-cover rounded-full profile-img-border bg-brand-surface filter grayscale group-hover:grayscale-0 transition-all duration-500"
+                        >
+                        <div class="absolute bottom-1 right-1 bg-brand-orange w-4 h-4 rounded-full animate-pulse border-2 border-black"></div>
+                    </div>
+
+                    <h1 class="text-5xl font-hero tracking-widest text-center mb-1 text-white drop-shadow-lg">
+                        PENGVERSE<span class="text-brand-orange">.</span>
+                    </h1>
+                    <p class="text-white/80 font-medium tracking-widest uppercase text-xs text-center drop-shadow-md">
+                        Official Store & Links
+                    </p>
+                </header>
+
+                <div class="w-full flex flex-col gap-4 mb-8">
+                    
+                    <button onclick="openShop('Peng Tshirts')" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none">
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-shirt text-brand-orange link-icon text-xl w-6 text-center"></i>
+                            <span class="font-bold text-sm tracking-widest uppercase text-white link-text">Peng Tshirts</span>
+                        </div>
+                        <i class="fas fa-arrow-right text-white/50 link-icon"></i>
+                    </button>
+
+                    <button onclick="openShop('Peng Hoodies')" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none">
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-layer-group text-brand-orange link-icon text-xl w-6 text-center"></i>
+                            <span class="font-bold text-sm tracking-widest uppercase text-white link-text">Peng Hoodies</span>
+                        </div>
+                        <i class="fas fa-arrow-right text-white/50 link-icon"></i>
+                    </button>
+
+                    <button onclick="openShop('Peng Keychains')" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none">
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-key text-brand-orange link-icon text-xl w-6 text-center"></i>
+                            <span class="font-bold text-sm tracking-widest uppercase text-white link-text">Peng Keychains</span>
+                        </div>
+                        <i class="fas fa-arrow-right text-white/50 link-icon"></i>
+                    </button>
+
+                    <button onclick="openShop('Peng Mugs')" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none">
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-mug-hot text-brand-orange link-icon text-xl w-6 text-center"></i>
+                            <span class="font-bold text-sm tracking-widest uppercase text-white link-text">Peng Mugs</span>
+                        </div>
+                        <i class="fas fa-arrow-right text-white/50 link-icon"></i>
+                    </button>
+
+                    <button onclick="openShop('Peng Plushies')" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none">
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-ghost text-brand-orange link-icon text-xl w-6 text-center"></i>
+                            <span class="font-bold text-sm tracking-widest uppercase text-white link-text">Peng Plushies</span>
+                        </div>
+                        <i class="fas fa-arrow-right text-white/50 link-icon"></i>
+                    </button>
+
+                    <!-- Instagram Link -->
+                    <a href="https://www.instagram.com/peng_verse?igsh=ajd5OXh4eDJ2MzF2" target="_blank" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none mt-2">
+                        <div class="flex items-center gap-4">
+                            <i class="fab fa-instagram text-brand-orange link-icon text-xl w-6 text-center"></i>
+                            <span class="font-bold text-sm tracking-widest uppercase text-white link-text">Instagram</span>
+                        </div>
+                        <i class="fas fa-external-link-alt text-white/50 link-icon text-sm"></i>
+                    </a>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- ============================================== -->
+        <!-- VIEW 2: DYNAMIC SHOP PAGE -->
+        <!-- ============================================== -->
+        <main id="view-shop" class="view-section view-hidden w-full max-w-[1200px] mx-auto flex flex-col relative z-20 p-5 sm:p-8 min-h-full">
+            
+            <!-- Shop Navigation -->
+            <nav class="flex items-center justify-between border-b border-white/20 pb-6 mb-10 sticky top-0 bg-[#030303]/80 backdrop-blur-xl z-40 pt-4 rounded-b-xl px-4 -mx-4 sm:mx-0 sm:px-0 sm:rounded-none">
+                <button onclick="closeShop()" class="flex items-center gap-2 text-white hover:text-brand-orange transition group bg-white/10 px-4 py-2 rounded-full backdrop-blur-md">
+                    <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+                    <span class="font-bold tracking-widest uppercase text-sm">Back</span>
+                </button>
+                <h2 id="shop-title" class="font-hero text-3xl md:text-5xl tracking-wide text-white absolute left-1/2 -translate-x-1/2 drop-shadow-md">
+                    CATEGORY
+                </h2>
+                <div class="w-10"></div> <!-- spacer -->
+            </nav>
+
+            <!-- Product Grid -->
+            <div id="shop-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 gap-y-12 pb-20">
+                <!-- Injected via JS -->
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        const productsDB = [
+            // T-SHIRTS
+            { category: "Peng Tshirts", name: "Heavyweight Box Tee", price: 40.00, img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=600" },
+            { category: "Peng Tshirts", name: "Gritty Graphic Tee", price: 45.00, img: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&q=80&w=600" },
+            { category: "Peng Tshirts", name: "Vintage Acid Wash Tee", price: 50.00, img: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=600" },
+
+            // HOODIES
+            { category: "Peng Hoodies", name: "OG Logo Hoodie", price: 85.00, img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=600" },
+            { category: "Peng Hoodies", name: "Tactical Zip-Up", price: 95.00, img: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=600" },
+            { category: "Peng Hoodies", name: "Oversized Street Hoodie", price: 90.00, img: "https://images.unsplash.com/photo-1614252339460-e1e792461ce5?auto=format&fit=crop&q=80&w=600" },
+
+            // KEYCHAINS
+            { category: "Peng Keychains", name: "Enamel Mascot Keychain", price: 15.00, img: "https://images.unsplash.com/photo-1590736969955-71cc94801759?auto=format&fit=crop&q=80&w=600" },
+            { category: "Peng Keychains", name: "Utility Lanyard", price: 22.00, img: "https://images.unsplash.com/photo-1601662998634-192a4e25a2e5?auto=format&fit=crop&q=80&w=600" },
+
+            // MUGS
+            { category: "Peng Mugs", name: "Studio Coffee Mug", price: 18.00, img: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&q=80&w=600" },
+            { category: "Peng Mugs", name: "Insulated Travel Tumbler", price: 28.00, img: "https://images.unsplash.com/photo-1620019488340-9a2cc0c7e2b7?auto=format&fit=crop&q=80&w=600" },
+
+            // PLUSHIES
+            { category: "Peng Plushies", name: "Classic 8\" Plushy", price: 35.00, img: "https://images.unsplash.com/photo-1559405021-9d29b0a66fbc?auto=format&fit=crop&q=80&w=600" },
+            { category: "Peng Plushies", name: "Mini Desk Buddy", price: 20.00, img: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=600" }
+        ];
+
+        function openShop(categoryName) {
+            const viewLinks = document.getElementById('view-links');
+            const viewShop = document.getElementById('view-shop');
+            const shopTitle = document.getElementById('shop-title');
+            const shopGrid = document.getElementById('shop-grid');
+
+            // Fade out links
+            viewLinks.classList.remove('view-active');
+            viewLinks.classList.add('view-hidden');
+
+            setTimeout(() => {
+                // Update title
+                shopTitle.innerHTML = categoryName.toUpperCase().replace('PENG ', 'PENG<span class="text-brand-orange">.</span> ');
+                
+                // Inject products
+                const categoryProducts = productsDB.filter(p => p.category === categoryName);
+                shopGrid.innerHTML = categoryProducts.map(p => `
+                    <div class="product-card group flex flex-col bg-black/50 backdrop-blur-md rounded-xl p-3 border border-white/10">
+                        <div class="relative aspect-[4/5] overflow-hidden rounded-lg mb-4">
+                            <img src="${p.img}" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="flex justify-between items-start px-2">
+                            <h3 class="font-bold text-white text-lg leading-tight w-2/3">${p.name}</h3>
+                            <span class="font-medium text-brand-orange">$${p.price.toFixed(2)}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Scroll to top and Fade in shop
+                window.scrollTo({ top: 0, behavior: 'instant' });
+                viewShop.classList.remove('view-hidden');
+                viewShop.classList.add('view-active');
+            }, 400);
+        }
+
+        function closeShop() {
+            const viewLinks = document.getElementById('view-links');
+            const viewShop = document.getElementById('view-shop');
+
+            viewShop.classList.remove('view-active');
+            viewShop.classList.add('view-hidden');
+
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+                viewLinks.classList.remove('view-hidden');
+                viewLinks.classList.add('view-active');
+            }, 400);
+        }
+    </script>
+</body>
+</html>
