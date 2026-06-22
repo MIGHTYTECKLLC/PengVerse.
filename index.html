@@ -38,22 +38,22 @@
 
     <style>
         body {
-            background-color: #b9e3f9; 
-            color: #FFFFFF;
+            color: #111111;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* 100% Guaranteed Plain Icy Blue & White Background */
+        /* Pale White Background */
         .bg-ice-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
             pointer-events: none;
-            background: linear-gradient(to bottom, #ffffff 0%, #e0f2fe 35%, #7dd3fc 70%, #0284c7 100%);
+            background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
+            z-index: -1;
         }
 
         /* Frosted White Glass Link Buttons */
@@ -66,8 +66,8 @@
             cursor: pointer;
             
             /* White glass base */
-            background: rgba(255, 255, 255, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
@@ -79,19 +79,10 @@
 
         /* Hover / Select state for White Glass */
         .link-card:hover, .link-card:focus {
-            background: rgba(255, 255, 255, 0.65);
+            background: rgba(255, 255, 255, 0.75);
             border-color: #ffffff;
             transform: translateY(-4px);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        .profile-img-border {
-            border: 3px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-        }
-        .group:hover .profile-img-border {
-            border-color: #000000;
         }
 
         .view-section {
@@ -122,115 +113,278 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        /* ── Shop Nav ── */
+        .shop-nav {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .shop-nav-title {
+            font-size: clamp(1.1rem, 5vw, 2.8rem);
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ── Product Grid ── */
+        #shop-grid {
+            grid-template-columns: 1fr;
+        }
+        @media (min-width: 640px) {
+            #shop-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            #shop-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* ── Product Card Image Wrapper ── */
+        .card-img-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #ffffff;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+        }
+        .card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            transition: transform 0.45s ease, opacity 0.3s ease;
+            opacity: 0.95;
+        }
+        .product-card:hover .card-img-wrap img {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+
+        /* ── Card container upgrade ── */
+        .product-card {
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255,255,255,0.7);
+            border-radius: 16px;
+            padding: 10px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+            transform: translateY(-3px);
+            background: rgba(255,255,255,0.75);
+        }
+
+        /* ── Card info row ── */
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            padding: 0.25rem 0.4rem 0.4rem;
+        }
+        .card-name {
+            font-weight: 700;
+            font-size: 0.88rem;
+            line-height: 1.3;
+            color: #111111;
+        }
+        .card-price {
+            font-weight: 600;
+            font-size: 0.82rem;
+            white-space: nowrap;
+            align-self: flex-start;
+            background: rgba(0,0,0,0.07);
+            padding: 0.25rem 0.65rem;
+            border-radius: 999px;
+            color: #111111;
+            letter-spacing: 0.02em;
+            transition: all 0.2s ease;
+        }
+        .product-card:hover .card-price {
+            background: #000;
+            color: #fff;
+        }
+
+        @media (min-width: 640px) {
+            .card-info {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .card-name  { font-size: 1rem; }
+            .card-price { font-size: 0.9rem; }
+            .card-img-wrap { aspect-ratio: 1 / 1; }
+        }
+
+        /* Toast Container */
+        #toast-container {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            pointer-events: none;
+        }
+        
+        .custom-toast {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .custom-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 
 <body class="min-h-screen flex flex-col items-center selection:bg-black selection:text-white relative w-full">
     
     <div class="bg-ice-container"></div>
+    <div id="toast-container"></div>
 
     <!-- WRAPPER -->
-    <div class="relative w-full z-10 h-[100dvh]">
+    <div class="relative w-full z-10 min-h-screen">
         
         <!-- ============================================== -->
-        <!-- VIEW 1: LINKS DIRECTORY (ABSOLUTELY CENTERED) -->
+        <!-- VIEW 1: LINKS DIRECTORY -->
         <!-- ============================================== -->
         <main id="view-links" class="view-section view-active fixed inset-0 w-full h-[100dvh] flex items-center justify-center">
-            <div class="w-full max-w-[400px] flex flex-col items-center justify-center p-6 max-h-[100dvh] overflow-y-auto pb-10 no-scrollbar">
-                
-                <header class="flex flex-col items-center mb-8 w-full mt-4">
-                    <!-- Profile Picture -->
-                    <div class="mb-5 group cursor-pointer relative">
-                        <img 
-                            src="https://images.unsplash.com/photo-1551085254-e96b210db58a?auto=format&fit=crop&q=80&w=400" 
-                            alt="Pengverse Profile" 
-                            class="w-28 h-28 object-cover rounded-full profile-img-border bg-brand-surface filter grayscale group-hover:grayscale-0 transition-all duration-500"
-                        >
-                        <div class="absolute bottom-1 right-1 bg-black w-4 h-4 rounded-full animate-pulse border-2 border-white"></div>
-                    </div>
-
-                    <h1 class="text-5xl font-hero tracking-widest text-center mb-1 text-black drop-shadow-lg">
-                        PENGVERSE<span class="text-black">.</span>
-                    </h1>
-                    <p class="text-black/70 font-bold tracking-widest uppercase text-xs text-center">
-                        Official Store & Links
-                    </p>
-                </header>
-
-                <div class="w-full flex flex-col gap-4 mb-8 link-wrapper">
+            <div class="w-full max-w-[400px] h-full flex flex-col p-6 overflow-y-auto pb-10 no-scrollbar">
+                <div class="flex flex-col items-center w-full min-h-full py-4 justify-start">
+                    <div class="grow"></div>
                     
-                    <button onclick="openShop('Peng Tshirts')" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none">
-                        <div class="flex items-center gap-4">
-                            <i class="fas fa-shirt link-icon text-xl w-6 text-center"></i>
-                            <span class="font-bold text-sm tracking-widest uppercase link-text">Peng Tshirts</span>
+                    <header class="flex flex-col items-center mb-8 w-full mt-4 animate-fade-in-up">
+                        <!-- Profile Picture -->
+                        <div class="mb-5 group cursor-pointer relative">
+                            <img 
+                                src="images/Penguin.png" 
+                                onerror="this.src='https://placehold.co/400x400/030303/FFFFFF?text=PENG'"
+                                alt="Pengverse Profile" 
+                                class="w-28 h-28 object-cover rounded-full filter grayscale group-hover:grayscale-0 transition-all duration-500 border-4 border-white/50 shadow-xl"
+                            >
                         </div>
-                        <i class="fas fa-arrow-right link-icon opacity-60"></i>
-                    </button>
 
-                    <button onclick="openShop('Peng Hoodies')" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none">
-                        <div class="flex items-center gap-4">
-                            <i class="fas fa-layer-group link-icon text-xl w-6 text-center"></i>
-                            <span class="font-bold text-sm tracking-widest uppercase link-text">Peng Hoodies</span>
-                        </div>
-                        <i class="fas fa-arrow-right link-icon opacity-60"></i>
-                    </button>
+                        <h1 class="text-6xl font-hero tracking-widest text-center mb-1 text-black drop-shadow-sm">
+                            PENGVERSE<span class="text-brand-orange">.</span>
+                        </h1>
+                        <p class="text-black/70 font-bold tracking-widest uppercase text-xs text-center letter-spacing-wider">
+                            Official Store & Links
+                        </p>
 
-                    <button onclick="openShop('Peng Keychains')" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none">
-                        <div class="flex items-center gap-4">
-                            <i class="fas fa-key link-icon text-xl w-6 text-center"></i>
-                            <span class="font-bold text-sm tracking-widest uppercase link-text">Peng Keychains</span>
+                        <!-- Social Icons Row -->
+                        <div class="flex gap-4 mt-5">
+                            <a href="https://www.instagram.com/peng_verse" target="_blank" class="w-10 h-10 rounded-full bg-white/40 backdrop-blur-md flex items-center justify-center text-black hover:bg-white hover:scale-110 transition-all shadow-sm border border-white/60">
+                                <i class="fab fa-instagram text-lg"></i>
+                            </a>
+                            <a href="#" target="_blank" onclick="showToast('Facebook page coming soon!'); return false;" class="w-10 h-10 rounded-full bg-white/40 backdrop-blur-md flex items-center justify-center text-black hover:bg-white hover:scale-110 transition-all shadow-sm border border-white/60">
+                                <i class="fab fa-facebook-f text-lg"></i>
+                            </a>
+                            <a href="#" target="_blank" onclick="showToast('YouTube channel coming soon!'); return false;" class="w-10 h-10 rounded-full bg-white/40 backdrop-blur-md flex items-center justify-center text-black hover:bg-white hover:scale-110 transition-all shadow-sm border border-white/60">
+                                <i class="fab fa-youtube text-lg"></i>
+                            </a>
                         </div>
-                        <i class="fas fa-arrow-right link-icon opacity-60"></i>
-                    </button>
+                    </header>
 
-                    <button onclick="openShop('Peng Mugs')" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none">
-                        <div class="flex items-center gap-4">
-                            <i class="fas fa-mug-hot link-icon text-xl w-6 text-center"></i>
-                            <span class="font-bold text-sm tracking-widest uppercase link-text">Peng Mugs</span>
-                        </div>
-                        <i class="fas fa-arrow-right link-icon opacity-60"></i>
-                    </button>
+                    <div class="w-full flex flex-col gap-4 mb-8 link-wrapper items-center animate-fade-in-up" style="animation-delay: 0.1s;">
+                        <div class="w-full flex flex-col gap-3 items-center max-w-[320px]">
+                            
+                            <!-- Main Store Button -->
+                            <button onclick="openShop('Store')" class="link-card rounded-xl p-4 w-full flex items-center justify-between group outline-none">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center group-hover:bg-white transition-colors">
+                                        <i class="fas fa-store link-icon text-sm"></i>
+                                    </div>
+                                    <span class="font-bold text-sm tracking-widest uppercase">Store</span>
+                                </div>
+                                <i class="fas fa-arrow-right link-icon opacity-40 group-hover:translate-x-1 group-hover:opacity-100 transition-all"></i>
+                            </button>
 
-                    <button onclick="openShop('Peng Plushies')" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none">
-                        <div class="flex items-center gap-4">
-                            <i class="fas fa-ghost link-icon text-xl w-6 text-center"></i>
-                            <span class="font-bold text-sm tracking-widest uppercase link-text">Peng Plushies</span>
-                        </div>
-                        <i class="fas fa-arrow-right link-icon opacity-60"></i>
-                    </button>
+                            <!-- Wallpapers Button -->
+                            <button onclick="openShop('Peng Wallpapers')" class="link-card rounded-xl p-4 w-full flex items-center justify-between group outline-none">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center group-hover:bg-white transition-colors">
+                                        <i class="fas fa-image link-icon text-sm"></i>
+                                    </div>
+                                    <span class="font-bold text-sm tracking-widest uppercase">Wallpapers</span>
+                                </div>
+                                <i class="fas fa-arrow-right link-icon opacity-40 group-hover:translate-x-1 group-hover:opacity-100 transition-all"></i>
+                            </button>
 
-                    <!-- Instagram Link -->
-                    <a href="https://www.instagram.com/peng_verse?igsh=ajd5OXh4eDJ2MzF2" target="_blank" class="link-card rounded-xl w-full p-4 flex items-center justify-between group outline-none mt-2">
-                        <div class="flex items-center gap-4">
-                            <i class="fab fa-instagram link-icon text-xl w-6 text-center"></i>
-                            <span class="font-bold text-sm tracking-widest uppercase link-text">Instagram</span>
+                            <!-- Buy a Fish for Peng -->
+                            <a href="https://buy.stripe.com/aFa8wO3VU2b7c57gZg1ck08" target="_blank" onclick="showToast('Thank you for the support!', false)" class="link-card rounded-xl p-4 w-full flex items-center justify-between group outline-none bg-brand-orange/10 border-brand-orange/30 hover:bg-brand-orange/20 hover:border-brand-orange/50">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-brand-orange/20 flex items-center justify-center group-hover:bg-brand-orange/30 transition-colors">
+                                        <i class="fas fa-fish text-brand-orange text-sm drop-shadow-sm"></i>
+                                    </div>
+                                    <span class="font-bold text-sm tracking-widest uppercase text-black">Buy a Fish</span>
+                                </div>
+                                <i class="fas fa-heart text-brand-orange opacity-70 group-hover:scale-110 group-hover:opacity-100 transition-all"></i>
+                            </a>
+
                         </div>
-                        <i class="fas fa-external-link-alt link-icon text-sm opacity-60"></i>
-                    </a>
+                    </div>
+                    <div class="grow"></div>
                 </div>
-
             </div>
         </main>
 
         <!-- ============================================== -->
         <!-- VIEW 2: DYNAMIC SHOP PAGE -->
         <!-- ============================================== -->
-        <main id="view-shop" class="view-section view-hidden w-full max-w-[1200px] mx-auto flex flex-col relative z-20 p-5 sm:p-8 min-h-full">
+        <main id="view-shop" class="view-section view-hidden w-full max-w-[1200px] mx-auto flex flex-col relative z-20 p-5 sm:p-8 min-h-screen">
             
             <!-- Shop Navigation -->
-            <nav class="flex items-center justify-between border-b border-black/10 pb-6 mb-10 sticky top-0 bg-white/80 backdrop-blur-xl z-40 pt-4 rounded-b-xl px-4 -mx-4 sm:mx-0 sm:px-0 sm:rounded-none shadow-sm">
-                <button onclick="closeShop()" class="flex items-center gap-2 text-black hover:text-white hover:bg-black transition-all group bg-black/5 border border-black/10 px-4 py-2 rounded-full backdrop-blur-md">
-                    <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
-                    <span class="font-bold tracking-widest uppercase text-sm">Back</span>
+            <nav class="shop-nav border border-black/10 py-3 mb-8 sticky top-2 rounded-2xl bg-white/85 backdrop-blur-xl z-40 px-4 shadow-sm">
+                <button onclick="closeShop()" class="justify-self-start flex items-center gap-2 text-black hover:text-white hover:bg-black transition-all group bg-black/5 border border-black/10 px-3 py-2 rounded-full">
+                    <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform text-sm"></i>
+                    <span class="font-bold tracking-widest uppercase text-xs">Back</span>
                 </button>
-                <h2 id="shop-title" class="font-hero text-3xl md:text-5xl tracking-wide text-black absolute left-1/2 -translate-x-1/2 drop-shadow-sm">
+                <h2 id="shop-title" class="shop-nav-title font-hero tracking-wide text-black drop-shadow-sm">
                     CATEGORY
                 </h2>
-                <div class="w-10"></div> <!-- spacer -->
+                <div></div> <!-- spacer keeps title centred -->
             </nav>
 
-            <!-- Product Grid -->
-            <div id="shop-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 gap-y-12 pb-20">
+            
+            <div id="shop-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 gap-y-12 pb-32 justify-items-center w-full">
                 <!-- Injected via JS -->
             </div>
         </main>
@@ -240,27 +394,61 @@
     <script>
         const productsDB = [
             // T-SHIRTS
-            { category: "Peng Tshirts", name: "Heavyweight Box Tee", price: 40.00, img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=600" },
-            { category: "Peng Tshirts", name: "Gritty Graphic Tee", price: 45.00, img: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&q=80&w=600" },
-            { category: "Peng Tshirts", name: "Vintage Acid Wash Tee", price: 50.00, img: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=600" },
+            { category: "Peng Tshirts", name: "Heavyweight Box Tee", comingSoon: true, img: "images/Tshirt design 1.png", bg: "#F8F8F8"  },
+            { category: "Peng Tshirts", name: "Gritty Graphic Tee", comingSoon: true, img: "images/Tshirt design 2.png", bg: "#F5F5F4" },
+            { category: "Peng Tshirts", name: "Spy Graphic Tee", comingSoon: true, img: "images/Spy Tshirt 1.png", bg: "#FEFEFE" },
+            { category: "Peng Tshirts", name: "Spy Graphic Tee", comingSoon: true, img: "images/Spy Tshirt 2.png", bg: "#F9F8F9" },
+            { category: "Peng Tshirts", name: "Sasha Graphic Tee ", comingSoon: true, img: "images/Sasha Tshirt.png", bg: "#FDFDFE" },
 
             // HOODIES
-            { category: "Peng Hoodies", name: "OG Logo Hoodie", price: 85.00, img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=600" },
-            { category: "Peng Hoodies", name: "Tactical Zip-Up", price: 95.00, img: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=600" },
-            { category: "Peng Hoodies", name: "Oversized Street Hoodie", price: 90.00, img: "https://images.unsplash.com/photo-1614252339460-e1e792461ce5?auto=format&fit=crop&q=80&w=600" },
-
+            { category: "Peng Hoodies", name: "OG Logo Hoodie", comingSoon: true, img: "images/Hoodie.png", bg: "#F3F3F3" },
+            { category: "Peng Hoodies", name: "Spy Hoodie", comingSoon: true, img: "images/Spy Hoodie.png", bg: "#F1F1F1" },
+            { category: "Peng Hoodies", name: "Sasha Hoodie", comingSoon: true, img: "images/Sasha Hoodie.png", bg: "#fefefe" },
+            
             // KEYCHAINS
-            { category: "Peng Keychains", name: "Enamel Mascot Keychain", price: 15.00, img: "https://images.unsplash.com/photo-1590736969955-71cc94801759?auto=format&fit=crop&q=80&w=600" },
-            { category: "Peng Keychains", name: "Utility Lanyard", price: 22.00, img: "https://images.unsplash.com/photo-1601662998634-192a4e25a2e5?auto=format&fit=crop&q=80&w=600" },
+            { category: "Peng Keychains", name: "Utility Lanyard", comingSoon: true, img: "images/utility_lanyard.png", bg: "#D4D9DD" },
 
-            // MUGS
-            { category: "Peng Mugs", name: "Studio Coffee Mug", price: 18.00, img: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&q=80&w=600" },
-            { category: "Peng Mugs", name: "Insulated Travel Tumbler", price: 28.00, img: "https://images.unsplash.com/photo-1620019488340-9a2cc0c7e2b7?auto=format&fit=crop&q=80&w=600" },
-
+            // WALLPAPERS
+            { category: "Peng Wallpapers", name: "Peng Demon", img: "images/Peng_Demon_walpaper.png", fit: "contain" },
+            { category: "Peng Wallpapers", name: "Peng Stop", img: "images/Peng_stop_walpaper.png", fit: "cover" },
+            { category: "Peng Wallpapers", name: "Peng Football", img: "images/Peng_football_walpaper.png", fit: "cover" },
+            { category: "Peng Wallpapers", name: "Peng Chill", img: "images/Peng_chill_walpaper.png", fit: "cover" },
+            
             // PLUSHIES
-            { category: "Peng Plushies", name: "Classic 8\" Plushy", price: 35.00, img: "https://images.unsplash.com/photo-1559405021-9d29b0a66fbc?auto=format&fit=crop&q=80&w=600" },
-            { category: "Peng Plushies", name: "Mini Desk Buddy", price: 20.00, img: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=600" }
+            { category: "Peng Plushies", name: "Classic 8\" Plushy", comingSoon: true, img: "images/Plushie Toy.jpeg", bg: "#FEFEFE" },
+            { category: "Peng Plushies", name: "Mini Desk Buddy", comingSoon: true, img: "images/Sasha Plushie.png", fit: "contain" },
         ];
+
+        // Custom Toast Notification System
+        function showToast(message, isSuccess = true) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            
+            const icon = isSuccess ? '<i class="fas fa-check-circle text-green-400"></i>' : '<i class="fas fa-heart text-brand-orange"></i>';
+            toast.innerHTML = `${icon} <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function handleProductClick(productName, isDownload, isComingSoon = false) {
+            if (isComingSoon) {
+                showToast(`${productName} is coming soon!`, false);
+            } else if (isDownload) {
+                showToast(`Started downloading: ${productName}`, true);
+            } else {
+                showToast(`Added ${productName} to cart!`, true);
+            }
+        }
 
         function openShop(categoryName) {
             const viewLinks = document.getElementById('view-links');
@@ -273,22 +461,42 @@
             viewLinks.classList.add('view-hidden');
 
             setTimeout(() => {
-                // Update title styling to match new monochrome aesthetic
+                // Update title
                 shopTitle.innerHTML = categoryName.toUpperCase().replace('PENG ', 'PENG<span class="text-black">.</span> ');
                 
-                // Inject products with new monochrome styling
-                const categoryProducts = productsDB.filter(p => p.category === categoryName);
-                shopGrid.innerHTML = categoryProducts.map(p => `
-                    <div class="product-card group flex flex-col bg-white/60 backdrop-blur-md rounded-xl p-3 border border-black/10 shadow-sm hover:shadow-xl transition-all duration-300">
-                        <div class="relative aspect-[4/5] overflow-hidden rounded-lg mb-4">
-                            <img src="${p.img}" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition duration-500 group-hover:scale-110">
+                // Determine which products to show
+                let categoryProducts;
+                if (categoryName === 'Store') {
+                    // Show everything EXCEPT wallpapers
+                    categoryProducts = productsDB.filter(p => p.category !== 'Peng Wallpapers');
+                } else {
+                    // Show specific category (like Wallpapers)
+                    categoryProducts = productsDB.filter(p => p.category === categoryName);
+                }
+
+                // Inject products with an onclick event to trigger the custom toast
+                shopGrid.innerHTML = categoryProducts.map(p => {
+                    const isDownload = p.category === 'Peng Wallpapers';
+                    const isComingSoon = p.comingSoon ? 'true' : 'false';
+                    const fallbackImg = `https://placehold.co/400x400/eeeeee/999999?text=${encodeURIComponent(p.name)}`;
+                    
+                    return `
+                    <div class="product-card group w-full flex flex-col" onclick="handleProductClick('${p.name}', ${isDownload}, ${isComingSoon})">
+                        <div class="card-img-wrap" style="background: ${p.bg || '#ffffff'};">
+                            <img src="${p.img}" onerror="this.src='${fallbackImg}'" alt="${p.name}" loading="lazy" style="${p.fit ? `object-fit: ${p.fit};` : ''}">
                         </div>
-                        <div class="flex justify-between items-start px-2">
-                            <h3 class="font-bold text-black text-lg leading-tight w-2/3">${p.name}</h3>
-                            <span class="font-medium text-black bg-black/10 px-2 py-1 rounded-md">$${p.price.toFixed(2)}</span>
+                        <div class="card-info">
+                            <h3 class="card-name">${p.name}</h3>
+                            ${p.comingSoon ? 
+                            `<span class="card-price"><i class="fas fa-clock opacity-60 mr-1"></i> Coming Soon</span>` : 
+                            (p.price ? 
+                            `<span class="card-price">$${p.price.toFixed(2)}</span>` : 
+                            `<span class="card-price"><i class="fas fa-download mr-1"></i> Free</span>`)
+                            }
                         </div>
                     </div>
-                `).join('');
+                    `;
+                }).join('');
 
                 // Scroll to top and Fade in shop
                 window.scrollTo({ top: 0, behavior: 'instant' });
